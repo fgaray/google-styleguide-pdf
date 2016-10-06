@@ -1,6 +1,8 @@
 #SRCS = cppguide.latex angularjs-google-style.latex google-r-style.latex javaguide.latex jsoncstyleguide.latex pyguide.latex xmlstyle.latex style.latex READMEs.latex best_practices.latex philosophy.latex
 
 SRCS_GUIDE = $(wildcard styleguide/*.html)
+SRCS_GUIDE := $(filter-out styleguide/google-r-style.html, $(SRCS_GUIDE))
+SRCS_GUIDE := $(filter-out styleguide/jsoncstyleguide.html, $(SRCS_GUIDE))
 OBJS_GUIDE = $(SRCS_GUIDE:.html=.pdf)
 
 SRCS_DOC = $(wildcard styleguide/docguide/*.md)
@@ -8,14 +10,6 @@ OBJS_DOC = $(SRCS_DOC:.md=.pdf)
 
 all: build-pdf
 
-fix-sources: styleguide/Rguide.html styleguide/jsoncstyleguide_true.html
-
-styleguide/Rguide.html: styleguide/Rguide.xml
-	cp styleguide/Rguide.xml styleguide/Rguide.html
-
-styleguide/jsoncstyleguide_true.html: styleguide/jsoncstyleguide.xml
-	cp styleguide/jsoncstyleguide.xml styleguide/jsoncstyleguide_true.html
-	cp styleguide/*.png ./
 
 
 build-pdf: $(OBJS_GUIDE) $(OBJS_DOC) pdf
